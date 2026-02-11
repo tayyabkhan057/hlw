@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            /* AESTHETIC PASTEL PALETTE */
+            --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #fff5e6 100%);
+            --primary: #ff9a9e; /* Soft Pink */
+            --secondary: #fecfef; /* Light Pink */
+            --accent: #ffb7b2; /* Peach */
+            --text-main: #5d5d5d;
+            --text-highlight: #ff6b6b;
+            
+            --card-shadow: 0 10px 20px rgba(255, 154, 158, 0.2);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg-gradient);
+            font-family: 'Quicksand', sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth; /* Ensures smooth scrolling */
+        }
+
+        /* --- BACKGROUND ANIMATION --- */
+        .bg-circles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .bg-circles li {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 154, 158, 0.2);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+            border-radius: 50%;
+        }
+        .bg-circles li:nth-child(1){ left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+        .bg-circles li:nth-child(2){ left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+        .bg-circles li:nth-child(3){ left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+        .bg-circles li:nth-child(4){ left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+        .bg-circles li:nth-child(5){ left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+        .bg-circles li:nth-child(6){ left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+        .bg-circles li:nth-child(7){ left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+
+        @keyframes animate {
+            0%{ transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
+            100%{ transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
+        }
+
+        /* --- HERO SECTION --- */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 4.5rem;
+            color: var(--primary);
+            margin: 0;
+            line-height: 1.2;
+            text-shadow: 3px 3px 0px #fff;
+            animation: bounceIn 1.5s ease;
+        }
+
+        /* CLICKABLE WARNING BUTTON */
+        .subtitle {
+            background: #fff;
+            color: var(--text-highlight);
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 20px;
+            border-radius: 50px;
+            box-shadow: var(--card-shadow);
+            border: 2px solid var(--secondary);
+            letter-spacing: 1px;
+            cursor: pointer; /* Shows hand icon */
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .subtitle:hover {
+            transform: scale(1.1); /* Grows slightly when hovered */
+            background-color: #fff0f5;
+        }
+
+        @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); } 70% { transform: scale(0.9); } 100% { transform: scale(1); opacity: 1; } }
+
+        /* --- SECTIONS LAYOUT --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 120px;
+            opacity: 0; 
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+            scroll-margin-top: 50px; /* Adjusts scroll position */
+        }
+
+        .row.visible { opacity: 1; transform: translateY(0); }
+        .row:nth-child(even) { flex-direction: row-reverse; }
+
+        .text-box { flex: 1; padding: 40px; }
+        .text-box h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        .text-box p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .image-box { flex: 1; position: relative; text-align: center; }
+        .image-box img {
+            width: 100%;
+            max-width: 320px;
+            border: 15px solid white;
+            border-bottom: 40px solid white;
+            box-shadow: var(--card-shadow);
+            border-radius: 5px;
+            transform: rotate(-3deg);
+            transition: transform 0.3s;
+        }
+        .row:nth-child(even) .image-box img { transform: rotate(3deg); }
+        .image-box img:hover { transform: scale(1.05) rotate(0deg); z-index: 10; }
+
+        /* --- BUTTON & MODAL --- */
+        .final-surprise { text-align: center; padding: 80px 20px; }
+        .btn-tease {
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            padding: 15px 40px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 154, 158, 0.4);
+            transition: 0.3s;
+            border-radius: 50px;
+        }
+        .btn-tease:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(255, 154, 158, 0.6); }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            justify-content: center; align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #fff;
+            background-image: linear-gradient(#f1f1f1 1px, transparent 1px);
+            background-size: 100% 1.5rem;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            animation: popUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 2px solid var(--secondary);
+            position: relative;
+        }
+        .modal-content::before {
+            content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            width: 100px; height: 30px; background: rgba(255, 255, 255, 0.6);
+            border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        @keyframes popUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3.5rem; }
+            .row { flex-direction: column !important; text-align: center; gap: 40px; }
+            .image-box img { max-width: 90%; }
+        }
+    </style>
+</head>
+<body>
+
+    <ul class="bg-circles">
+        <li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+    </ul>
+
+    <header>
+        <h1>Happy Birthday<br>SANIYA ✨</h1>
+        <div class="subtitle" onclick="scrollToFirst()">Warning: Choti Bacchi Ahead ⚠️ (Click Me)</div>
+    </header>
+
+    <div class="container">
+        
+        <div class="row scroll-element" id="section-1">
+            <div class="image-box">
+                <img src="height.jpg" alt="Height">
+            </div>
+            <div class="text-box">
+                <!-- <h2> Height Ka Scam</h2> -->
+                <p>
+                    "Maine socha tha aapke liye full-size website banaunga, par aapki size hi itni chota hai ki 'Mini-Website' banani padi. <br><br>
+                    Tension mat lai, maine font size bada kar diya hai taaki apko neeche se sab clear dikhe. bass aapka photo zoom hooke bhi chota reh gaya."
+                </p>
+            </div>
+        </div>
+
+        <div class="row scroll-element">
+            <div class="text-box">
+                <h2> Gift</h2>
+                <p>
+                    "Maine socha aapko yeh gift de doon… <b>Ramzan aane wala hai na</b>, toh socha bartan dhote waqt bhi aap thoda muskura lo, kaam easy hoga. 🧼 <br><br>
+                    Har chamakte bartan ke saath bas itna samajh lena ke yeh gift sirf kaam ka nahi, balki <b>bhutt kaam ka hai</b>. <br>
+                    Is bahane hamai yaad kar lena. ✨"
+                </p>
+            </div>
+            <div class="image-box">
+                <img src="gift.jpeg" alt="Silly">
+            </div>
+        </div>
+
+        <div class="row scroll-element">
+            <div class="image-box">
+                <img src="eyes.jpeg" alt="Eyes">
+            </div>
+            <div class="text-box">
+                <h2> Aapki Aankhein...</h2>
+                <p>
+                    "Hey, honestly bolun toh tumhari eyes sach mein bahot pretty hain. <br><br>
+                    They are literally the first thing anyone would notice about you. <br>
+                    <b>Sach bataun? Kabhi kabhi inse nazar hatana mushkil ho jata hai. 😉</b> <br>
+                    Just felt like saying it.
+                </p>
+            </div>
+        </div>
+
+        
+
+    </div>
+
+    <div class="final-surprise">
+        <h2 style="font-family: 'Fredoka'; font-size: 2.5rem; color: var(--text-highlight); margin-bottom: 20px;"></h2>
+        <button class="btn-tease" onclick="showModal()">Click Here (Agar more left)</button>
+    </div>
+
+   <div class="modal" id="giftModal">
+        <div class="modal-content">
+            <h2 style="font-family: 'Fredoka'; color: var(--primary); font-size: 2.2rem; margin-top: 0;">Wait, Suno... 🌸</h2>
+            
+            <p style="font-size: 1rem; margin: 20px 0; text-align: left; line-height: 1.8; color: #555;">
+                Okay, mazak aside. <br><br>
+                
+                Bas itna kehna tha ki aap thodi <b>'Sunshine' ☀️</b>, thodi <b>'Calm' 🌊</b>, <br>
+                Main aapko tease isliye karta hoon kyunki aapke saamne main 'Real' hota hoon. <br><br>
+                
+                <b>Aaj cake se zyada aapki muskurahat aham hai, waise bhi woh aasani se muqaabla jeet leti hai 😉.</b> <br>
+                Umeed hai aapka din hasi, khushiyon aur achhe surprises se bhara ho. Har lamha enjoy karo aur aaj thoda zyada muskurana mat bhoolna. ✨
+            </p>
+
+            <p style="font-size: 0.85rem; color: #888; margin-top: 20px; font-style: italic; border-top: 1px solid #eee; padding-top: 15px;">
+                (Aur haan, "Uneven Eyeliner" ki tarah is message ko ignore mat karna 😉).
+            </p>
+            
+            <button class="btn-tease" style="font-size: 1rem; padding: 12px 30px; margin-top: 20px;" onclick="closeModal()">Smile Now :)</button>
+        </div>
+    </div>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.scroll-element').forEach(el => observer.observe(el));
+
+        // SCROLL FUNCTION
+        function scrollToFirst() {
+            document.getElementById('section-1').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // MODAL FUNCTION
+        function showModal() {
+            document.getElementById('giftModal').style.display = 'flex';
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ff9a9e', '#fecfef', '#a18cd1']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ff9a9e', '#fecfef', '#a18cd1']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        function closeModal() {
+            document.getElementById('giftModal').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
